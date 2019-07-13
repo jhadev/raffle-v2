@@ -5,7 +5,7 @@
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
   let raffle = [1, 3, 4];
-  let name = "Josh";
+  let name = "";
   let entries = 0;
   let colSize = 6;
 </script>
@@ -20,10 +20,13 @@
 
 <Container>
   <Jumbotron textCenter>
-    <h1>Hello {name}!</h1>
+    <h1>Raffle!</h1>
   </Jumbotron>
-  <Row center>
-    <Column mobile={12} md={6}>
+  <Row>
+    <Column mobile={12} md={8}>
+      <h1>Totals goes here</h1>
+    </Column>
+    <Column mobile={12} md={4}>
       <EntryForm {raffle} {name} {entries} />
     </Column>
   </Row>
