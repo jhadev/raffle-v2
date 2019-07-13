@@ -23,10 +23,10 @@
     // turn into array of arrays with name and count
     raffleCount = Object.entries(raffleCount);
     // map into objects with name, total, odds key:value pairs
-    raffleCount = raffleCount.map(count => ({
-      name: count[0],
-      total: count[1],
-      odds: ((count[1] / raffle.length) * 100).toFixed(2)
+    raffleCount = raffleCount.map(([name, total]) => ({
+      name,
+      total,
+      odds: ((total / raffle.length) * 100).toFixed(2)
     }));
     console.log(raffleCount);
     return raffleCount;
@@ -66,13 +66,19 @@
     entries = "";
   };
 
+  const deleteEntrant = event => {
+    const { id } = event.target;
+    raffle = raffle.filter(entrant => entrant !== id);
+  };
+
   console.log(raffle, name, entries);
   // console.log(count);
 </script>
 
 <style>
   /* i don't have much style yet */
-  h1 {
+  h1,
+  h2 {
     text-align: center;
     color: aliceblue;
   }
@@ -86,18 +92,24 @@
 <Container>
   <Jumbotron textCenter>
     <h1>Raffle!</h1>
+    <h2>Total Entries: {raffle.length}</h2>
   </Jumbotron>
   <Row>
     <Column mobile={12} md={8}>
       <!-- Test reactive declaration -->
-      <div class="text-light">
+      <div class="text-light text-center">
         <!-- possibly extract this to separate component -->
         <!-- iterate over count declaration -->
         {#each count as { name, total, odds }, index}
           <div>{name}</div>
           <div>{total}</div>
           <div>{odds}</div>
-          <!-- <span>{entrantCount}</span> -->
+          <button
+            id={name}
+            on:click={deleteEntrant}
+            class="btn btn-outline-light">
+            X
+          </button>
         {:else}
           <p>Counts go here</p>
         {/each}
