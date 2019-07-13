@@ -10,14 +10,17 @@
   let name = "";
   let entries = "";
 
-  const handleNameInput = event => {
+  const handleInput = (event, inputName) => {
     const { value } = event.target;
-    name = value;
-  };
-
-  const handleEntryInput = event => {
-    const { value } = event.target;
-    entries = value;
+    switch (inputName) {
+      case "name":
+        name = value;
+        break;
+      case "entries":
+        entries = value;
+        break;
+    }
+    console.log(name, entries);
   };
 
   const onSubmit = () => {
@@ -79,7 +82,7 @@
             placeholder="Enter Name"
             inputType="text"
             value={name}
-            on:input={handleNameInput} />
+            on:input={e => handleInput(e, 'name')} />
           <Input
             id="entryInput"
             className="input-text"
@@ -87,7 +90,7 @@
             placeholder="Numbers only please"
             inputType="number"
             value={entries}
-            on:input={handleEntryInput} />
+            on:input={e => handleInput(e, 'entries')} />
           <button
             disabled={!name || !entries}
             on:click={onSubmit}
