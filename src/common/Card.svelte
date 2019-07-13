@@ -6,11 +6,14 @@
 
 <style>
   /* i dont have style yet */
+  .header {
+    font-weight: bold;
+  }
 </style>
 
 <div class={color ? `card ${color}` : 'card'}>
   {#if header}
-    <div class="card-header">{header}</div>
+    <div class="card-header header">{header}</div>
   {/if}
   <div class="card-body">
     <slot />
