@@ -16,6 +16,22 @@
     const { value } = event.target;
     entries = value;
   };
+
+  const onSubmit = () => {
+    console.log("clicked");
+    const newName = `${name},`;
+    const repeatedName = newName.repeat(entries);
+    const fullEntry = repeatedName.slice(0, -1).split(",");
+    // returns an array of each name repeated like this ["josh", "josh", "josh"]
+    console.log(fullEntry);
+    // push each name into array
+    fullEntry.forEach(entry => {
+      raffle.push(entry);
+    });
+    // revert variables to initial state
+    name = "";
+    entries = "";
+  };
 </script>
 
 <style>
@@ -30,9 +46,9 @@
 
 <div class="wrapper">
   <Card color="bg-light" header="testing">
-    <h1>{raffle}</h1>
+    <!-- <h1>{raffle}</h1>
     <h1>{name}</h1>
-    <h1>{entries}</h1>
+    <h1>{entries}</h1> -->
     <form>
       <div class="form-group">
         <label for="nameInput">Name</label>
@@ -40,7 +56,7 @@
           type="text"
           class="form-control input-text"
           id="entrant-name"
-          value={name}
+          bind:value={name}
           on:input={handleNameInput}
           aria-describedby="nameInput"
           placeholder="Enter name" />
@@ -51,10 +67,16 @@
           type="number"
           class="form-control input-text"
           id="entries"
-          value={entries}
+          bind:value={entries}
           on:input={handleEntryInput}
           placeholder="Numbers only please" />
       </div>
     </form>
+    <button
+      disabled={!name || !entries}
+      on:click={onSubmit}
+      class="btn btn-primary">
+      Submit
+    </button>
   </Card>
 </div>

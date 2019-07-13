@@ -4,9 +4,11 @@
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
-  let raffle = [1, 3, 4];
+  let raffle = [];
   let name = "";
-  let entries = 0;
+  let entries = "";
+
+  console.log(raffle, name, entries);
 </script>
 
 <style>
