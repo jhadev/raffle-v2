@@ -6,9 +6,17 @@
   import Row from "./common/Row.svelte";
   import Card from "./common/Card.svelte";
   import Input from "./common/Input.svelte";
+
   let raffle = [];
   let name = "";
   let entries = "";
+
+  // reactive declaration to count names in raffle array whenever it changes
+  // possibly can add to this to do more.
+  $: count = raffle.reduce((obj, name) => {
+    obj[name] = (obj[name] || 0) + 1;
+    return obj;
+  }, {});
 
   const handleInput = (event, inputName) => {
     const { value } = event.target;
@@ -45,6 +53,7 @@
   };
 
   console.log(raffle, name, entries);
+  // console.log(count);
 </script>
 
 <style>
@@ -70,7 +79,8 @@
   </Jumbotron>
   <Row>
     <Column mobile={12} md={8}>
-      <h1>Totals goes here</h1>
+      <!-- Test reactive declaration -->
+      <h1>{count ? JSON.stringify(count) : null}</h1>
     </Column>
     <Column mobile={12} md={4}>
       <div class="wrapper">
