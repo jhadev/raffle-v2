@@ -1,61 +1,57 @@
-<!-- Will use the component eventually -->
+<!-- will eventually move stuff into this component -->
 
-<!-- <script>
-  import Row from "./common/Row.svelte";
-  import Column from "./common/Column.svelte";
-  import Card from "./common/Card.svelte";
-  import Input from "./common/Input.svelte";
-  // code here
-  export let raffle;
-  export let name;
-  export let entries;
+<script>
+  // import Row from "./common/Row.svelte";
+  // import Column from "./common/Column.svelte";
+  // import Card from "./common/Card.svelte";
+  // // code here
+  // export let raffle;
+  // export let name;
+  // export let entries;
 
-  const handleNameInput = event => {
-    const { value } = event.target;
-    name = value;
-  };
+  // const handleNameInput = event => {
+  //   const { value } = event.target;
+  //   name = value;
+  // };
 
-  const handleEntryInput = event => {
-    const { value } = event.target;
-    entries = value;
-  };
+  // const handleEntryInput = event => {
+  //   const { value } = event.target;
+  //   entries = value;
+  // };
 
-  const onSubmit = () => {
-    console.log("clicked");
-    const newName = `${name},`;
-    const repeatedName = newName.repeat(entries);
-    const fullEntry = repeatedName.slice(0, -1).split(",");
-    // returns an array of each name repeated like this ["josh", "josh", "josh"]
-    console.log(fullEntry);
-    // push each name into array
-    fullEntry.forEach(entry => {
-      raffle.push(entry);
-    });
-    // revert variables to initial state
-    name = "";
-    entries = "";
-  };
-</script><style>
+  // const onSubmit = () => {
+  //   console.log("clicked");
+  //   const newName = `${name},`;
+  //   const repeatedName = newName.repeat(entries);
+  //   const fullEntry = repeatedName.slice(0, -1).split(",");
+  //   // returns an array of each name repeated like this ["josh", "josh", "josh"]
+  //   console.log(fullEntry);
+  //   // push each name into array
+  //   fullEntry.forEach(entry => {
+  //     raffle.push(entry);
+  //   });
+  //   // revert variables to initial state
+  //   name = "";
+  //   entries = "";
+  // };
+</script>
+
+<style>
   /* scoped style here */
-  .wrapper {
+  /* .wrapper {
     text-align: center;
     color: black;
-  }
-</style><!-- svelte html here -->
+  } */
+</style>
 
-<div class="wrapper">
+<!-- svelte html here -->
+
+<!-- <div class="wrapper">
   <Card color="bg-light" header="testing">
-    <!-- <h1>{raffle}</h1>
+    <h1>{raffle}</h1>
     <h1>{name}</h1>
-    <h1>{entries}</h1> -->
-    <Input
-      id="nameInput"
-      label="Name"
-      placeholder="Enter Name"
-      inputType="text"
-      value={name}
-      on:input={handleNameInput} />
-    <!-- <form>
+    <h1>{entries}</h1>
+    <form>
       <div class="form-group">
         <label for="nameInput">Name</label>
         <input
@@ -77,7 +73,7 @@
           on:input={handleEntryInput}
           placeholder="Numbers only please" />
       </div>
-    </form> -->
+    </form>
     <button
       disabled={!name || !entries}
       on:click={onSubmit}
@@ -85,5 +81,4 @@
       Submit
     </button>
   </Card>
-</div>
--->
+</div> -->

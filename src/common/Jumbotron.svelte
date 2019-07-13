@@ -1,4 +1,5 @@
 <script>
+  // these props are optional export initial values as falsy
   export let textCenter = false;
   export let fluid = false;
 </script>

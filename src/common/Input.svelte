@@ -1,12 +1,12 @@
 <script>
-  export let type = "input";
   export let id;
   export let label;
-  export let placeholder = "";
   export let inputType;
-  export let rows = 3;
   export let value;
   export let className = "";
+  export let rows = 3;
+  export let type = "input";
+  export let placeholder = "";
 </script>
 
 <style>

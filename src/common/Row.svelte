@@ -1,4 +1,5 @@
 <script>
+  // these props are optional export initial values as falsy
   export let between = false;
   export let start = false;
   export let end = false;

@@ -1,4 +1,5 @@
 <script>
+  // these props are optional export initial values as falsy
   export let color = "";
   export let header = "";
 </script>
