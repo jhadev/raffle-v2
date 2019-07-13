@@ -6,22 +6,77 @@
   export let raffle;
   export let name;
   export let entries;
+
+  const handleNameInput = event => {
+    const { value } = event.target;
+    name = value;
+  };
+
+  const handleEntryInput = event => {
+    const { value } = event.target;
+    entries = value;
+  };
+
+  const onSubmit = () => {
+    console.log("clicked");
+    const newName = `${name},`;
+    const repeatedName = newName.repeat(entries);
+    const fullEntry = repeatedName.slice(0, -1).split(",");
+    // returns an array of each name repeated like this ["josh", "josh", "josh"]
+    console.log(fullEntry);
+    // push each name into array
+    fullEntry.forEach(entry => {
+      raffle.push(entry);
+    });
+    // revert variables to initial state
+    name = "";
+    entries = "";
+  };
 </script>
 
 <style>
   /* scoped style here */
   .wrapper {
     text-align: center;
-    color: aliceblue;
+    color: black;
   }
 </style>
 
 <!-- svelte html here -->
 
 <div class="wrapper">
-  <Card color="bg-dark" header="testing">
-    <h1>{raffle}</h1>
+  <Card color="bg-light" header="testing">
+    <!-- <h1>{raffle}</h1>
     <h1>{name}</h1>
-    <h1>{entries}</h1>
+    <h1>{entries}</h1> -->
+    <form>
+      <div class="form-group">
+        <label for="nameInput">Name</label>
+        <input
+          type="text"
+          class="form-control input-text"
+          id="entrant-name"
+          bind:value={name}
+          on:input={handleNameInput}
+          aria-describedby="nameInput"
+          placeholder="Enter name" />
+      </div>
+      <div class="form-group">
+        <label for="entriesInput">Number of entries</label>
+        <input
+          type="number"
+          class="form-control input-text"
+          id="entries"
+          bind:value={entries}
+          on:input={handleEntryInput}
+          placeholder="Numbers only please" />
+      </div>
+    </form>
+    <button
+      disabled={!name || !entries}
+      on:click={onSubmit}
+      class="btn btn-primary">
+      Submit
+    </button>
   </Card>
 </div>
