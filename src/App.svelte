@@ -7,7 +7,6 @@
   let raffle = [1, 3, 4];
   let name = "";
   let entries = 0;
-  let colSize = 6;
 </script>
 
 <style>
