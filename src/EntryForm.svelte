@@ -7,11 +7,15 @@
 
 <style>
   /* scoped style here */
+  .wrapper {
+    text-align: center;
+    color: aliceblue;
+  }
 </style>
 
 <!-- svelte html here -->
 
-<div class="text-light">
+<div class="wrapper">
   <h1>{raffle}</h1>
   <h1>{name}</h1>
   <h1>{entries}</h1>
