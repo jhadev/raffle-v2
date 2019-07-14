@@ -1,11 +1,11 @@
 <script>
-  // import EntryForm from "./EntryForm.svelte";
   import Container from "./common/Container.svelte";
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
   import Card from "./common/Card.svelte";
   import Input from "./common/Input.svelte";
+  import Display from "./Display.svelte";
 
   let raffle = [];
   let name = "";
@@ -30,6 +30,14 @@
     }));
     console.log(raffleCount);
     return raffleCount;
+  };
+
+  const randomize = array => {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   };
 
   const handleInput = (event, inputName) => {
@@ -59,7 +67,7 @@
     });
 
     // trigger a render
-    raffle = raffleClone;
+    raffle = randomize(raffleClone);
     console.log(raffle, name, entries);
     // revert variables to initial state
     name = "";
@@ -72,7 +80,6 @@
   };
 
   console.log(raffle, name, entries);
-  // console.log(count);
 </script>
 
 <style>
@@ -96,24 +103,7 @@
   </Jumbotron>
   <Row>
     <Column mobile={12} md={8}>
-      <!-- Test reactive declaration -->
-      <div class="text-light text-center">
-        <!-- possibly extract this to separate component -->
-        <!-- iterate over count declaration -->
-        {#each count as { name, total, odds }, index}
-          <div>{name}</div>
-          <div>{total}</div>
-          <div>{odds}</div>
-          <button
-            id={name}
-            on:click={deleteEntrant}
-            class="btn btn-outline-light">
-            X
-          </button>
-        {:else}
-          <p>Counts go here</p>
-        {/each}
-      </div>
+      <Display {count} on:click={deleteEntrant} />
     </Column>
     <Column mobile={12} md={4}>
       <div class="wrapper">
