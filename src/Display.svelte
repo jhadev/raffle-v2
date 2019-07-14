@@ -24,7 +24,6 @@
       <div class="align-self-center badge badge-light odds">
         {name}: {total}
       </div>
-
       {#if odds > 50}
         <div class="align-self-center odds badge badge-success">{odds}%</div>
       {:else if odds < 10}

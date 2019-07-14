@@ -5,12 +5,14 @@
   import Row from "./common/Row.svelte";
   import Card from "./common/Card.svelte";
   import Input from "./common/Input.svelte";
+  import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
 
   let raffle = [];
   let name = "";
   let entries = "";
-
+  let winner = "";
+  let winnerDisabled = false;
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -50,12 +52,10 @@
         entries = value;
         break;
     }
-    console.log(name, entries);
   };
 
   const onSubmit = () => {
     const raffleClone = [...raffle];
-    console.log("clicked");
     const newName = `${name},`;
     const repeatedName = newName.repeat(entries);
     const fullEntry = repeatedName.slice(0, -1).split(",");
@@ -65,10 +65,8 @@
     fullEntry.forEach(entry => {
       raffleClone.push(entry);
     });
-
     // trigger a render
     raffle = randomize(raffleClone);
-    console.log(raffle, name, entries);
     // revert variables to initial state
     name = "";
     entries = "";
@@ -79,7 +77,27 @@
     raffle = raffle.filter(entrant => entrant !== id);
   };
 
-  console.log(raffle, name, entries);
+  const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const pickWinner = () => {
+    winnerDisabled = true;
+    const raffleClone = [...raffle];
+    const random = randomize(raffleClone);
+    const winningIndex = random[getRandomInt(0, random.length - 1)];
+    const interval = window.setInterval(() => {
+      const tickerRandom = random[getRandomInt(0, random.length - 1)];
+      winner = `<div class="badge badge-light">${tickerRandom}</div>`;
+      window.setTimeout(() => {
+        clearInterval(interval);
+      }, 5000);
+    }, 100);
+    setTimeout(() => {
+      winner = `<div class="badge badge-success">The winner is ${winningIndex}!</div>`;
+      winnerDisabled = false;
+    }, 5100);
+  };
 </script>
 
 <style>
@@ -90,48 +108,37 @@
     color: aliceblue;
   }
 
-  .wrapper {
-    text-align: center;
-    color: black;
+  #winner {
+    font-size: 48px;
   }
 </style>
 
 <Container>
   <Jumbotron textCenter>
     <h1>Raffle!</h1>
-    <h2>Total Entries: {raffle.length}</h2>
+    {#if raffle.length}
+      <h2>Total Entries: {raffle.length}</h2>
+    {/if}
+    {#if winner}
+      <div id="winner" class="text-center">
+        {@html winner}
+      </div>
+    {/if}
   </Jumbotron>
   <Row>
     <Column mobile={12} md={8}>
       <Display {count} on:click={deleteEntrant} />
     </Column>
     <Column mobile={12} md={4}>
-      <div class="wrapper">
-        <Card color="bg-light" header="Input Your Entries">
-          <Input
-            id="nameInput"
-            label="Name"
-            className="input-text"
-            placeholder="Enter Name"
-            inputType="text"
-            value={name}
-            on:input={e => handleInput(e, 'name')} />
-          <Input
-            id="entryInput"
-            className="input-text"
-            label="Entries"
-            placeholder="Numbers only please"
-            inputType="number"
-            value={entries}
-            on:input={e => handleInput(e, 'entries')} />
-          <button
-            disabled={!name || !entries}
-            on:click={onSubmit}
-            class="btn btn-primary">
-            Submit
-          </button>
-        </Card>
-      </div>
+      <Entry
+        {name}
+        {entries}
+        {winnerDisabled}
+        {pickWinner}
+        {onSubmit}
+        {raffle}
+        handleNameInput={e => handleInput(e, 'name')}
+        handleEntryInput={e => handleInput(e, 'entries')} />
     </Column>
   </Row>
 </Container>
