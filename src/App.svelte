@@ -1,4 +1,5 @@
 <script>
+  import moment from "moment";
   import Container from "./common/Container.svelte";
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
@@ -13,6 +14,8 @@
   let entries = "";
   let winner = "";
   let winnerDisabled = false;
+  let raffleStorage = localStorage.getItem("raffle");
+  console.log(raffleStorage);
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -55,6 +58,8 @@
   };
 
   const onSubmit = () => {
+    // turn winner into empty string just in case
+    winner = "";
     const raffleClone = [...raffle];
     const newName = `${name},`;
     const repeatedName = newName.repeat(entries);
@@ -98,6 +103,45 @@
       winnerDisabled = false;
     }, 5100);
   };
+
+  // TODO: add a way to check if localstorage is empty so the load button can be disabled
+  const saveRaffle = () => {
+    const raffleClone = [...raffle];
+    if (raffleClone.length > 0) {
+      localStorage.setItem("raffle", JSON.stringify(raffleClone));
+      // trigger a render to remove load button
+      raffleStorage = localStorage.getItem("raffle");
+      const date = moment().format("LLL");
+      localStorage.setItem("date", JSON.stringify(date));
+      // TODO: get rid of alerts
+      alert(`raffle saved on ${date}`);
+    } else {
+      alert("raffle is empty");
+    }
+  };
+
+  const loadRaffle = () => {
+    console.log("clicked");
+    const raffleClone = [...raffle];
+    const savedRaffle = localStorage.getItem("raffle");
+    let savedDate = localStorage.getItem("date");
+    savedDate = JSON.parse(savedDate);
+    // this will add to raffle whether it is empty or not
+    if (savedRaffle) {
+      const namesList = JSON.parse(savedRaffle);
+      namesList.forEach(name => {
+        raffleClone.push(name);
+      });
+      raffle = raffleClone;
+    }
+  };
+
+  const deleteRaffle = () => {
+    console.log("clicked");
+    localStorage.clear();
+    // trigger a render to remove load button
+    raffleStorage = localStorage.getItem("raffle");
+  };
 </script>
 
 <style>
@@ -106,6 +150,12 @@
   h2 {
     text-align: center;
     color: aliceblue;
+    margin-top: 10px;
+  }
+
+  .storage {
+    margin: 0rem 0.3rem;
+    color: #fff;
   }
 
   #winner {
@@ -116,6 +166,22 @@
 <Container>
   <Jumbotron textCenter>
     <h1>Raffle!</h1>
+    <!-- TODO: extract this -->
+    <!-- if raffle isn't empty -->
+    {#if raffle.length}
+      <button class="storage btn btn-outline-success" on:click={saveRaffle}>
+        Save Raffle
+      </button>
+    {/if}
+    <!-- if something is in localStorage -->
+    {#if raffleStorage}
+      <button class="storage btn btn-outline-primary" on:click={loadRaffle}>
+        Load Raffle
+      </button>
+      <button class="storage btn btn-outline-danger" on:click={deleteRaffle}>
+        Delete Raffle
+      </button>
+    {/if}
     {#if raffle.length}
       <h2>Total Entries: {raffle.length}</h2>
     {/if}
