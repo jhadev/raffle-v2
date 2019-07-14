@@ -3,6 +3,7 @@
 </script>
 
 <style>
+  /* TODO: fix styles */
   .odds {
     font-size: 1.2rem;
   }
@@ -15,6 +16,7 @@
 
 <div class="text-light text-center">
   <!-- iterate over count declaration -->
+  <!-- FIXME: change how this is displayed -->
   {#each count as { name, total, odds }}
     <div
       class="count-wrapper d-flex justify-content-between border border-light">

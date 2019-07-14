@@ -10,13 +10,14 @@
   import Display from "./Display.svelte";
   import Storage from "./Storage.svelte";
 
+  // TODO: get rid of console.logs and alerts
+
   let raffle = [];
   let name = "";
   let entries = "";
   let winner = "";
   let winnerDisabled = false;
-  let raffleStorage = localStorage.getItem("raffle");
-  console.log(raffleStorage);
+  let raffleStorage = !!localStorage.getItem("raffle");
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -94,27 +95,30 @@
     const winningIndex = random[getRandomInt(0, random.length - 1)];
     const interval = window.setInterval(() => {
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
+      // FIXME: change how this is displayed
       winner = `<div class="badge badge-light">${tickerRandom}</div>`;
       window.setTimeout(() => {
         clearInterval(interval);
       }, 5000);
     }, 100);
     setTimeout(() => {
+      // FIXME: change how this is displayed
       winner = `<div class="badge badge-success">The winner is ${winningIndex}!</div>`;
       winnerDisabled = false;
     }, 5100);
   };
 
-  // TODO: add a way to check if localstorage is empty so the load button can be disabled
   const saveRaffle = () => {
     const raffleClone = [...raffle];
     if (raffleClone.length > 0) {
       localStorage.setItem("raffle", JSON.stringify(raffleClone));
       // trigger a render to remove load button
-      raffleStorage = localStorage.getItem("raffle");
+      // set raffleStorage to its boolean value
+      raffleStorage = !!localStorage.getItem("raffle");
+      console.log(raffleStorage);
       const date = moment().format("LLL");
       localStorage.setItem("date", JSON.stringify(date));
-      // TODO: get rid of alerts
+      // TODO: get rid of alerts but still let user know what is happening (swal or modal?)
       alert(`raffle saved on ${date}`);
     } else {
       alert("raffle is empty");
@@ -122,12 +126,11 @@
   };
 
   const loadRaffle = () => {
-    console.log("clicked");
     const raffleClone = [...raffle];
     const savedRaffle = localStorage.getItem("raffle");
     let savedDate = localStorage.getItem("date");
     savedDate = JSON.parse(savedDate);
-    // this will add to raffle whether it is empty or not
+    // FIXME: this will add to raffle whether it is empty or not so let user know.
     if (savedRaffle) {
       const namesList = JSON.parse(savedRaffle);
       namesList.forEach(name => {
@@ -138,15 +141,16 @@
   };
 
   const deleteRaffle = () => {
-    console.log("clicked");
+    // FIXME: let the user know what is happening.
     localStorage.clear();
     // trigger a render to remove load button
-    raffleStorage = localStorage.getItem("raffle");
+    // set raffleStorage to its boolean value
+    raffleStorage = !!localStorage.getItem("raffle");
   };
 </script>
 
 <style>
-  /* i don't have much style yet */
+  /* TODO: don't forget to style */
   h1,
   h2 {
     text-align: center;
