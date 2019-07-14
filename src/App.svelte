@@ -5,6 +5,7 @@
   import Row from "./common/Row.svelte";
   import Card from "./common/Card.svelte";
   import Input from "./common/Input.svelte";
+  import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
 
   let raffle = [];
@@ -107,11 +108,6 @@
     color: aliceblue;
   }
 
-  .wrapper {
-    text-align: center;
-    color: black;
-  }
-
   #winner {
     font-size: 48px;
   }
@@ -134,38 +130,15 @@
       <Display {count} on:click={deleteEntrant} />
     </Column>
     <Column mobile={12} md={4}>
-      <div class="wrapper">
-        <Card color="bg-light" header="Input Your Entries">
-          <Input
-            id="nameInput"
-            label="Name"
-            className="input-text"
-            placeholder="Enter Name"
-            inputType="text"
-            value={name}
-            on:input={e => handleInput(e, 'name')} />
-          <Input
-            id="entryInput"
-            className="input-text"
-            label="Entries"
-            placeholder="Numbers only please"
-            inputType="number"
-            value={entries}
-            on:input={e => handleInput(e, 'entries')} />
-          <button
-            disabled={!name || !entries}
-            on:click={onSubmit}
-            class="btn btn-primary">
-            Submit
-          </button>
-          <button
-            disabled={raffle.length === 0 || winnerDisabled}
-            on:click={pickWinner}
-            class="btn btn-success">
-            Pick Winner
-          </button>
-        </Card>
-      </div>
+      <Entry
+        {name}
+        {entries}
+        {winnerDisabled}
+        {pickWinner}
+        {onSubmit}
+        {raffle}
+        handleNameInput={e => handleInput(e, 'name')}
+        handleEntryInput={e => handleInput(e, 'entries')} />
     </Column>
   </Row>
 </Container>
