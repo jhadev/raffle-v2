@@ -8,6 +8,7 @@
   import Input from "./common/Input.svelte";
   import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
+  import Storage from "./Storage.svelte";
 
   let raffle = [];
   let name = "";
@@ -153,11 +154,6 @@
     margin-top: 10px;
   }
 
-  .storage {
-    margin: 0rem 0.3rem;
-    color: #fff;
-  }
-
   #winner {
     font-size: 48px;
   }
@@ -166,22 +162,13 @@
 <Container>
   <Jumbotron textCenter>
     <h1>Raffle!</h1>
-    <!-- TODO: extract this -->
-    <!-- if raffle isn't empty -->
-    {#if raffle.length}
-      <button class="storage btn btn-outline-success" on:click={saveRaffle}>
-        Save Raffle
-      </button>
-    {/if}
-    <!-- if something is in localStorage -->
-    {#if raffleStorage}
-      <button class="storage btn btn-outline-primary" on:click={loadRaffle}>
-        Load Raffle
-      </button>
-      <button class="storage btn btn-outline-danger" on:click={deleteRaffle}>
-        Delete Raffle
-      </button>
-    {/if}
+    <Storage
+      {raffle}
+      {raffleStorage}
+      {loadRaffle}
+      {saveRaffle}
+      {deleteRaffle} />
+
     {#if raffle.length}
       <h2>Total Entries: {raffle.length}</h2>
     {/if}
