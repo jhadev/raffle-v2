@@ -8,6 +8,8 @@
   export let name;
   export let entries;
   export let winnerDisabled;
+  export let progressBar = 0;
+  export let progressText;
 
   export let handleNameInput = (event, nameInput) => {};
   export let handleEntryInput = (event, nameInput) => {};
@@ -45,6 +47,23 @@
       inputType="number"
       value={entries}
       on:input={handleEntryInput} />
+    <Row center>
+      <Column mobile={12} md={12}>
+        <div class="progress mb-3">
+          <div
+            style="width: {progressBar}%"
+            id="dynamic"
+            class="progress-bar progress-bar-animated progress-bar-striped
+            bg-dark"
+            role="progressbar"
+            aria-valuenow={progressBar}
+            aria-valuemin="0"
+            aria-valuemax="100">
+            <span id="current-progress">{progressText}</span>
+          </div>
+        </div>
+      </Column>
+    </Row>
     <Row>
       <button
         disabled={!name || !entries}
