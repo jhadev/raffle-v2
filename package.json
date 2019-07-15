@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "moment": "^2.24.0",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "build": "rollup -c",
