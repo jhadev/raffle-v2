@@ -1,5 +1,6 @@
 <script>
   export let count;
+  export let animationNameIn;
 </script>
 
 <style>
@@ -26,16 +27,17 @@
 
 <!-- <div class="text-light text-center"> -->
 <!-- iterate over count declaration -->
-<!-- FIXME: change how this is displayed -->
-{#if count.length}
-  <hr class="animated slideInLeft" />
-{/if}
-{#each count as { name, total, odds }}
+<!-- FIXME: change how this is displayed and maybe add a parent div? -->
+
+{#each count as { name, total, odds }, index}
+  {#if index === 0}
+    <hr class="animated {animationNameIn} {name}" />
+  {/if}
   <div
-    class="count-wrapper animated slideInLeft d-flex justify-content-between
-    border-light border-right border-left">
+    class="count-wrapper {name} animated {animationNameIn} d-flex
+    justify-content-between border-light border-right border-left">
     <!-- delete button -->
-    <button id={name} on:click class="btn btn-outline-light">X</button>
+    <button value={name} on:click class="btn btn-outline-light">X</button>
     <!-- display content -->
     <div class="align-self-center badge badge-light odds">{name}: {total}</div>
     {#if odds > 50}
@@ -46,8 +48,8 @@
       <div class="align-self-center odds badge badge-light">{odds}%</div>
     {/if}
   </div>
-  <hr class="animated slideInLeft" />
+  <hr class="{name} animated {animationNameIn}" />
 {:else}
-  <h2>Counts go here</h2>
+  <h2>Add some entries!</h2>
 {/each}
 <!-- </div> -->

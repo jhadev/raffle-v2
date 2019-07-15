@@ -5,7 +5,6 @@
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
-
   import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
   import Storage from "./Storage.svelte";
@@ -20,6 +19,8 @@
   let raffleStorage = !!localStorage.getItem("raffle");
   let progressBar = 0;
   let progressText = "";
+  let animationNameIn = "zoomIn";
+  let animationNameOut = "zoomOut";
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -79,9 +80,8 @@
     const raffleClone = [...raffle];
     const newName = `${name},`;
     const repeatedName = newName.repeat(parseInt(entries));
-    const fullEntry = repeatedName.slice(0, -1).split(",");
     // returns an array of each name repeated like this ["josh", "josh", "josh"]
-
+    const fullEntry = repeatedName.slice(0, -1).split(",");
     // push each name into array
     fullEntry.forEach(entry => {
       raffleClone.push(entry);
@@ -94,8 +94,19 @@
   };
 
   const deleteEntrant = event => {
-    const { id } = event.target;
-    raffle = raffle.filter(entrant => entrant !== id);
+    // grab value from delete button
+    const { value } = event.target;
+    // grab node list where the value === className and turn it into an array
+    let namesDOM = [...document.getElementsByClassName(value)];
+    // loop and remove the inbound animation and add the outbound
+    namesDOM.forEach(name => {
+      name.classList.remove(animationNameIn);
+      name.classList.add(animationNameOut);
+    });
+    // wait half a second to trigger a render and remove entrant from raffle array.
+    setTimeout(() => {
+      raffle = raffle.filter(entrant => entrant !== value);
+    }, 700);
   };
 
   const getRandomInt = (min, max) => {
@@ -108,11 +119,11 @@
     const raffleClone = [...raffle];
     const random = randomize(raffleClone);
     const winningName = random[getRandomInt(0, random.length - 1)];
-    const interval = window.setInterval(() => {
+    const interval = setInterval(() => {
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
       winner = `<div class="badge badge-light">${tickerRandom}</div>`;
-      window.setTimeout(() => {
+      setTimeout(() => {
         clearInterval(interval);
       }, 5000);
     }, 100);
@@ -124,8 +135,34 @@
   };
 
   const saveRaffle = () => {
+    // FIXME: clean this up somehow??
     const raffleClone = [...raffle];
-    if (raffleClone.length > 0) {
+
+    if (raffleClone.length > 0 && raffleStorage) {
+      const savedDate = JSON.parse(localStorage.getItem("date"));
+      swal({
+        title: "Hold up...",
+        text: `You are about to overwrite your current save from ${savedDate}. Do you want to proceed`,
+        icon: "warning",
+        buttons: {
+          cancel: "Cancel",
+          load: {
+            text: "Do It!",
+            value: true
+          }
+        }
+      }).then(value => {
+        if (value) {
+          localStorage.setItem("raffle", JSON.stringify(raffleClone));
+          // trigger a render to remove load button
+          // set raffleStorage to its boolean value
+          raffleStorage = !!localStorage.getItem("raffle");
+          console.log(raffleStorage);
+          const date = moment().format("LLL");
+          localStorage.setItem("date", JSON.stringify(date));
+        }
+      });
+    } else if (raffleClone.length > 0) {
       localStorage.setItem("raffle", JSON.stringify(raffleClone));
       // trigger a render to remove load button
       // set raffleStorage to its boolean value
@@ -144,6 +181,7 @@
   };
 
   const loadRaffle = () => {
+    // TODO: option to merge or replace
     const raffleClone = [...raffle];
     const savedRaffle = localStorage.getItem("raffle");
     let savedDate = localStorage.getItem("date");
@@ -174,11 +212,11 @@
   };
 
   const deleteRaffle = () => {
-    const date = localStorage.getItem("date");
-
+    let savedDate = localStorage.getItem("date");
+    savedDate = JSON.parse(savedDate);
     swal({
       title: "Deleting Raffle...",
-      text: `Delete your raffle that was saved on ${JSON.parse(date)} `,
+      text: `Delete your raffle that was saved on ${savedDate} `,
       icon: "error",
       buttons: {
         cancel: "Cancel",
@@ -189,15 +227,18 @@
       }
     }).then(value => {
       if (value) {
+        // trigger a render to remove load button
+        // set raffleStorage to its boolean value
         localStorage.clear();
         raffleStorage = !!localStorage.getItem("raffle");
       }
     });
-    // trigger a render to remove load button
-    // set raffleStorage to its boolean value
   };
 
   const resetRaffle = () => {
+    progressBar = 0;
+    progressText = "";
+    winner = "";
     raffle = [];
   };
 
@@ -239,7 +280,6 @@
       {loadRaffle}
       {saveRaffle}
       {deleteRaffle} />
-
     {#if raffle.length}
       <h2>Total Entries: {raffle.length}</h2>
     {/if}
@@ -253,7 +293,7 @@
     <Column mobile={12} md={8}>
       <Row center>
         <Column mobile={12} md={10}>
-          <Display {count} on:click={deleteEntrant} />
+          <Display {animationNameIn} {count} on:click={deleteEntrant} />
         </Column>
       </Row>
     </Column>
