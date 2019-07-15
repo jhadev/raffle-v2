@@ -15,7 +15,6 @@
 
   hr {
     border-color: #f8f9fa !important;
-    background-color: #f8f9fa !important;
     margin: 0px !important;
   }
 

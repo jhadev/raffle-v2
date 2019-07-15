@@ -53,8 +53,8 @@
           <div
             style="width: {progressBar}%"
             id="dynamic"
-            class="progress-bar progress-bar-animated progress-bar-striped
-            bg-dark"
+            class="progress-bar progress-bar-striped bg-dark"
+            class:progress-bar-animated={progressBar <= 100}
             role="progressbar"
             aria-valuenow={progressBar}
             aria-valuemin="0"
