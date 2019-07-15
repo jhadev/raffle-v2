@@ -93,8 +93,10 @@
   };
 
   const deleteEntrant = event => {
-    const { id } = event.target;
-    raffle = raffle.filter(entrant => entrant !== id);
+    const { value } = event.target;
+    let name = document.getElementById(value);
+    name.classList.add("slideOutLeft");
+    raffle = raffle.filter(entrant => entrant !== value);
   };
 
   const getRandomInt = (min, max) => {

@@ -33,9 +33,11 @@
 {#each count as { name, total, odds }}
   <div
     class="count-wrapper animated slideInLeft d-flex justify-content-between
-    border-light border-right border-left">
+    border-light border-right border-left"
+    id={name}>
+
     <!-- delete button -->
-    <button id={name} on:click class="btn btn-outline-light">X</button>
+    <button value={name} on:click class="btn btn-outline-light">X</button>
     <!-- display content -->
     <div class="align-self-center badge badge-light odds">{name}: {total}</div>
     {#if odds > 50}
