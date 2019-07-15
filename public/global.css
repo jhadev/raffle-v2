@@ -10,7 +10,9 @@ body {
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(#141e30,
 			#243b55);
-	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 
 .load-btn,
@@ -35,14 +37,6 @@ body {
 	background: transparent !important;
 }
 
-button {
-	display: block;
-}
-
-hr {
-	background-color: white;
-	border-color: white;
-}
 
 .alert {
 	cursor: pointer;

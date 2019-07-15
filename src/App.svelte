@@ -4,8 +4,7 @@
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
-  import Card from "./common/Card.svelte";
-  import Input from "./common/Input.svelte";
+
   import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
   import Storage from "./Storage.svelte";
@@ -18,6 +17,7 @@
   let winner = "";
   let winnerDisabled = false;
   let raffleStorage = !!localStorage.getItem("raffle");
+  let animatedClass = `slideInLeft`;
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -35,7 +35,11 @@
       total,
       odds: ((total / raffle.length) * 100).toFixed(2)
     }));
-    console.log(raffleCount);
+    // sort by highest odds
+    raffleCount = raffleCount.sort((a, b) =>
+      parseInt(a.odds) < parseInt(b.odds) ? 1 : -1
+    );
+
     return raffleCount;
   };
 
@@ -147,6 +151,10 @@
     // set raffleStorage to its boolean value
     raffleStorage = !!localStorage.getItem("raffle");
   };
+
+  const resetRaffle = () => {
+    raffle = [];
+  };
 </script>
 
 <style>
@@ -194,6 +202,7 @@
         {pickWinner}
         {onSubmit}
         {raffle}
+        {resetRaffle}
         handleNameInput={e => handleInput(e, 'name')}
         handleEntryInput={e => handleInput(e, 'entries')} />
     </Column>
