@@ -27,7 +27,7 @@
 
 <!-- <div class="text-light text-center"> -->
 <!-- iterate over count declaration -->
-<!-- FIXME: change how this is displayed -->
+<!-- FIXME: change how this is displayed and maybe add a parent div? -->
 
 {#each count as { name, total, odds }, index}
   {#if index === 0}
@@ -36,7 +36,6 @@
   <div
     class="count-wrapper {name} animated {animationNameIn} d-flex
     justify-content-between border-light border-right border-left">
-
     <!-- delete button -->
     <button value={name} on:click class="btn btn-outline-light">X</button>
     <!-- display content -->
@@ -51,6 +50,6 @@
   </div>
   <hr class="{name} animated {animationNameIn}" />
 {:else}
-  <h2>Counts go here</h2>
+  <h2>Add some entries!</h2>
 {/each}
 <!-- </div> -->

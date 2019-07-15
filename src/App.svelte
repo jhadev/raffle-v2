@@ -80,9 +80,8 @@
     const raffleClone = [...raffle];
     const newName = `${name},`;
     const repeatedName = newName.repeat(parseInt(entries));
-    const fullEntry = repeatedName.slice(0, -1).split(",");
     // returns an array of each name repeated like this ["josh", "josh", "josh"]
-
+    const fullEntry = repeatedName.slice(0, -1).split(",");
     // push each name into array
     fullEntry.forEach(entry => {
       raffleClone.push(entry);
@@ -107,7 +106,7 @@
     // wait half a second to trigger a render and remove entrant from raffle array.
     setTimeout(() => {
       raffle = raffle.filter(entrant => entrant !== value);
-    }, 500);
+    }, 700);
   };
 
   const getRandomInt = (min, max) => {
@@ -136,9 +135,34 @@
   };
 
   const saveRaffle = () => {
-    // TODO: tell user they are overwriting the previous save
+    // FIXME: clean this up somehow??
     const raffleClone = [...raffle];
-    if (raffleClone.length > 0) {
+
+    if (raffleClone.length > 0 && raffleStorage) {
+      const savedDate = JSON.parse(localStorage.getItem("date"));
+      swal({
+        title: "Hold up...",
+        text: `You are about to overwrite your current save from ${savedDate}. Do you want to proceed`,
+        icon: "warning",
+        buttons: {
+          cancel: "Cancel",
+          load: {
+            text: "Do It!",
+            value: true
+          }
+        }
+      }).then(value => {
+        if (value) {
+          localStorage.setItem("raffle", JSON.stringify(raffleClone));
+          // trigger a render to remove load button
+          // set raffleStorage to its boolean value
+          raffleStorage = !!localStorage.getItem("raffle");
+          console.log(raffleStorage);
+          const date = moment().format("LLL");
+          localStorage.setItem("date", JSON.stringify(date));
+        }
+      });
+    } else if (raffleClone.length > 0) {
       localStorage.setItem("raffle", JSON.stringify(raffleClone));
       // trigger a render to remove load button
       // set raffleStorage to its boolean value
@@ -157,6 +181,7 @@
   };
 
   const loadRaffle = () => {
+    // TODO: option to merge or replace
     const raffleClone = [...raffle];
     const savedRaffle = localStorage.getItem("raffle");
     let savedDate = localStorage.getItem("date");
@@ -202,12 +227,12 @@
       }
     }).then(value => {
       if (value) {
+        // trigger a render to remove load button
+        // set raffleStorage to its boolean value
         localStorage.clear();
         raffleStorage = !!localStorage.getItem("raffle");
       }
     });
-    // trigger a render to remove load button
-    // set raffleStorage to its boolean value
   };
 
   const resetRaffle = () => {
@@ -255,7 +280,6 @@
       {loadRaffle}
       {saveRaffle}
       {deleteRaffle} />
-
     {#if raffle.length}
       <h2>Total Entries: {raffle.length}</h2>
     {/if}
