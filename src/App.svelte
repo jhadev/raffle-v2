@@ -17,7 +17,8 @@
   let winner = "";
   let winnerDisabled = false;
   let raffleStorage = !!localStorage.getItem("raffle");
-  let animatedClass = `slideInLeft`;
+  let progressBar = 0;
+  let progressText = "";
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -64,11 +65,19 @@
   };
 
   const onSubmit = () => {
+    // TODO: display message to user
+    // if entries are 0 clear field
+    if (!parseInt(entries)) {
+      entries = "";
+      return;
+    }
+
+    animateProgressBar();
     // turn winner into empty string just in case
     winner = "";
     const raffleClone = [...raffle];
     const newName = `${name},`;
-    const repeatedName = newName.repeat(entries);
+    const repeatedName = newName.repeat(parseInt(entries));
     const fullEntry = repeatedName.slice(0, -1).split(",");
     // returns an array of each name repeated like this ["josh", "josh", "josh"]
 
@@ -93,10 +102,11 @@
   };
 
   const pickWinner = () => {
+    animateProgressBar();
     winnerDisabled = true;
     const raffleClone = [...raffle];
     const random = randomize(raffleClone);
-    const winningIndex = random[getRandomInt(0, random.length - 1)];
+    const winningName = random[getRandomInt(0, random.length - 1)];
     const interval = window.setInterval(() => {
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
@@ -107,7 +117,7 @@
     }, 100);
     setTimeout(() => {
       // FIXME: change how this is displayed
-      winner = `<div class="badge badge-success">The winner is ${winningIndex}!</div>`;
+      winner = `<div class="badge badge-success">The winner is ${winningName}!</div>`;
       winnerDisabled = false;
     }, 5100);
   };
@@ -155,6 +165,20 @@
   const resetRaffle = () => {
     raffle = [];
   };
+
+  const animateProgressBar = () => {
+    let currentProgress = 0;
+    progressBar = 0;
+    progressText = "Randomizing Entries";
+    const interval = setInterval(function() {
+      currentProgress += getRandomInt(50, 75);
+      progressBar = currentProgress;
+      if (currentProgress >= 100) {
+        clearInterval(interval);
+        progressText = "Entries Randomized";
+      }
+    }, 1000);
+  };
 </script>
 
 <style>
@@ -192,7 +216,11 @@
   </Jumbotron>
   <Row>
     <Column mobile={12} md={8}>
-      <Display {count} on:click={deleteEntrant} />
+      <Row center>
+        <Column mobile={12} md={10}>
+          <Display {count} on:click={deleteEntrant} />
+        </Column>
+      </Row>
     </Column>
     <Column mobile={12} md={4}>
       <Entry
@@ -203,6 +231,8 @@
         {onSubmit}
         {raffle}
         {resetRaffle}
+        {progressBar}
+        {progressText}
         handleNameInput={e => handleInput(e, 'name')}
         handleEntryInput={e => handleInput(e, 'entries')} />
     </Column>

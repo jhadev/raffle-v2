@@ -6,6 +6,10 @@
 
 <style>
   /* i don't have much style yet */
+  .jumbotron {
+    margin-bottom: 0px !important;
+    padding: 3rem 2rem !important;
+  }
 </style>
 
 <div
