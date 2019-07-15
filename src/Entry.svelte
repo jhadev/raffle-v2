@@ -74,7 +74,7 @@
     </Row>
     <Row>
       <button
-        disabled={raffle.length === 0 || winnerDisabled}
+        disabled={!raffle.length || winnerDisabled}
         on:click={pickWinner}
         class="ml-3 btn btn-success">
         Pick Winner

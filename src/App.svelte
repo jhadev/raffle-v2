@@ -5,7 +5,6 @@
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
   import Row from "./common/Row.svelte";
-
   import Entry from "./Entry.svelte";
   import Display from "./Display.svelte";
   import Storage from "./Storage.svelte";
@@ -124,6 +123,7 @@
   };
 
   const saveRaffle = () => {
+    // TODO: tell user they are overwriting the previous save
     const raffleClone = [...raffle];
     if (raffleClone.length > 0) {
       localStorage.setItem("raffle", JSON.stringify(raffleClone));
@@ -174,11 +174,11 @@
   };
 
   const deleteRaffle = () => {
-    const date = localStorage.getItem("date");
-
+    let savedDate = localStorage.getItem("date");
+    savedDate = JSON.parse(savedDate);
     swal({
       title: "Deleting Raffle...",
-      text: `Delete your raffle that was saved on ${JSON.parse(date)} `,
+      text: `Delete your raffle that was saved on ${savedDate} `,
       icon: "error",
       buttons: {
         cancel: "Cancel",
@@ -198,6 +198,9 @@
   };
 
   const resetRaffle = () => {
+    progressBar = 0;
+    progressText = "";
+    winner = "";
     raffle = [];
   };
 
