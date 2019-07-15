@@ -19,6 +19,8 @@
   let raffleStorage = !!localStorage.getItem("raffle");
   let progressBar = 0;
   let progressText = "";
+  let animationNameIn = "zoomIn";
+  let animationNameOut = "zoomOut";
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -93,10 +95,19 @@
   };
 
   const deleteEntrant = event => {
+    // grab value from delete button
     const { value } = event.target;
-    let name = document.getElementById(value);
-    name.classList.add("slideOutLeft");
-    raffle = raffle.filter(entrant => entrant !== value);
+    // grab node list where the value === className and turn it into an array
+    let namesDOM = [...document.getElementsByClassName(value)];
+    // loop and remove the inbound animation and add the outbound
+    namesDOM.forEach(name => {
+      name.classList.remove(animationNameIn);
+      name.classList.add(animationNameOut);
+    });
+    // wait half a second to trigger a render and remove entrant from raffle array.
+    setTimeout(() => {
+      raffle = raffle.filter(entrant => entrant !== value);
+    }, 500);
   };
 
   const getRandomInt = (min, max) => {
@@ -109,11 +120,11 @@
     const raffleClone = [...raffle];
     const random = randomize(raffleClone);
     const winningName = random[getRandomInt(0, random.length - 1)];
-    const interval = window.setInterval(() => {
+    const interval = setInterval(() => {
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
       winner = `<div class="badge badge-light">${tickerRandom}</div>`;
-      window.setTimeout(() => {
+      setTimeout(() => {
         clearInterval(interval);
       }, 5000);
     }, 100);
@@ -258,7 +269,7 @@
     <Column mobile={12} md={8}>
       <Row center>
         <Column mobile={12} md={10}>
-          <Display {count} on:click={deleteEntrant} />
+          <Display {animationNameIn} {count} on:click={deleteEntrant} />
         </Column>
       </Row>
     </Column>
