@@ -22,9 +22,20 @@
   </button>
 {/if}
 <!-- if something is in localStorage -->
-{#if raffleStorage}
+{#if raffleStorage && raffle.length}
   <button
-    class="storage animated slideInDown btn btn-outline-primary"
+    class="storage animated zoomIn btn btn-outline-primary"
+    on:click={loadRaffle}>
+    Load Raffle
+  </button>
+  <button
+    class="storage animated slideInRight btn btn-outline-danger"
+    on:click={deleteRaffle}>
+    Delete Raffle
+  </button>
+{:else if raffleStorage}
+  <button
+    class="storage animated slideInLeft btn btn-outline-primary"
     on:click={loadRaffle}>
     Load Raffle
   </button>
