@@ -1,5 +1,6 @@
 <script>
   import moment from "moment";
+  import swal from "sweetalert";
   import Container from "./common/Container.svelte";
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
@@ -132,10 +133,13 @@
       console.log(raffleStorage);
       const date = moment().format("LLL");
       localStorage.setItem("date", JSON.stringify(date));
-      // TODO: get rid of alerts but still let user know what is happening (swal or modal?)
-      alert(`raffle saved on ${date}`);
-    } else {
-      alert("raffle is empty");
+
+      swal({
+        title: "Raffle Saved!",
+        text: `Your raffle has been saved on ${date}`,
+        icon: "success",
+        button: "Close"
+      });
     }
   };
 
@@ -144,22 +148,53 @@
     const savedRaffle = localStorage.getItem("raffle");
     let savedDate = localStorage.getItem("date");
     savedDate = JSON.parse(savedDate);
-    // FIXME: this will add to raffle whether it is empty or not so let user know.
+
     if (savedRaffle) {
       const namesList = JSON.parse(savedRaffle);
       namesList.forEach(name => {
         raffleClone.push(name);
       });
-      raffle = raffleClone;
+      swal({
+        title: "Loading Raffle...",
+        text: `Loading your saved raffle will merge it with the current raffle.`,
+        icon: "warning",
+        buttons: {
+          cancel: "Cancel",
+          load: {
+            text: "Load",
+            value: true
+          }
+        }
+      }).then(value => {
+        if (value) {
+          raffle = raffleClone;
+        }
+      });
     }
   };
 
   const deleteRaffle = () => {
-    // FIXME: let the user know what is happening.
-    localStorage.clear();
+    const date = localStorage.getItem("date");
+
+    swal({
+      title: "Deleting Raffle...",
+      text: `Delete your raffle that was saved on ${JSON.parse(date)} `,
+      icon: "error",
+      buttons: {
+        cancel: "Cancel",
+        load: {
+          text: "Delete",
+          value: true
+        }
+      }
+    }).then(value => {
+      if (value) {
+        localStorage.clear();
+        raffleStorage = !!localStorage.getItem("raffle");
+      }
+    });
     // trigger a render to remove load button
     // set raffleStorage to its boolean value
-    raffleStorage = !!localStorage.getItem("raffle");
   };
 
   const resetRaffle = () => {
