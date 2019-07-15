@@ -13,12 +13,17 @@
   export let handleEntryInput = (event, nameInput) => {};
   export let pickWinner = () => {};
   export let onSubmit = () => {};
+  export let resetRaffle = () => {};
 </script>
 
 <style>
   .wrapper {
     text-align: center;
     color: black;
+  }
+
+  .resetRaffle {
+    font-size: 14px;
   }
 </style>
 
@@ -40,17 +45,28 @@
       inputType="number"
       value={entries}
       on:input={handleEntryInput} />
-    <button
-      disabled={!name || !entries}
-      on:click={onSubmit}
-      class="btn btn-primary">
-      Submit
-    </button>
-    <button
-      disabled={raffle.length === 0 || winnerDisabled}
-      on:click={pickWinner}
-      class="btn btn-success">
-      Pick Winner
-    </button>
+    <Row>
+      <button
+        disabled={!name || !entries}
+        on:click={onSubmit}
+        class="btn btn-primary ml-3 mb-2">
+        Submit
+      </button>
+    </Row>
+    <Row>
+      <button
+        disabled={raffle.length === 0 || winnerDisabled}
+        on:click={pickWinner}
+        class="ml-3 btn btn-success">
+        Pick Winner
+      </button>
+      {#if raffle.length}
+        <button
+          on:click={resetRaffle}
+          class="mr-3 ml-auto btn btn-outline-danger">
+          <i class="fas fa-undo-alt resetRaffle" />
+        </button>
+      {/if}
+    </Row>
   </Card>
 </div>
