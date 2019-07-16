@@ -30,14 +30,11 @@
 
   .progress {
     height: 1rem !important;
+    border-radius: 4px;
   }
 
   .progress-bar-striped {
     background-size: 1rem 1rem !important;
-  }
-
-  label {
-    font-size: 18px !important;
   }
 
   @media screen and (max-width: 600px) {
@@ -71,7 +68,7 @@
           <div
             style="width: {progressBar}%"
             id="dynamic"
-            class="progress-bar progress-bar-striped bg-dark"
+            class="progress-bar progress-bar-striped bg-danger"
             class:progress-bar-animated={progressBar <= 100}
             role="progressbar"
             aria-valuenow={progressBar}

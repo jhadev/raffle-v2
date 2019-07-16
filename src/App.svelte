@@ -271,6 +271,9 @@
 
   #winner {
     font-size: 48px;
+    text-align: center;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
   }
 </style>
 
@@ -284,7 +287,7 @@
       {saveRaffle}
       {deleteRaffle} />
     {#if winner}
-      <div id="winner" class="text-center my-2">
+      <div id="winner">
         {@html winner}
       </div>
     {/if}

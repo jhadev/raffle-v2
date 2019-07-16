@@ -8,6 +8,7 @@
   /* i dont have style yet */
   .header {
     font-weight: bold;
+    font-size: 0.95rem;
   }
 </style>
 
