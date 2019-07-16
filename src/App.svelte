@@ -298,49 +298,50 @@
   }
 </style>
 
-<Container>
-  <Jumbotron textCenter>
-    <h1 class="title">Raffle!</h1>
-    <Storage
-      {raffle}
-      {raffleStorage}
-      {loadRaffle}
-      {saveRaffle}
-      {deleteRaffle} />
-    {#if winner}
-      <div id="winner">
-        {@html winner}
-      </div>
-    {/if}
-  </Jumbotron>
-  <Row>
-    <Column mobile={12} md={8}>
-      <Row center>
-        <Column mobile={12} md={10}>
-          <div class="mb-4">
+<div class="mb-2">
+  <Container>
+    <Jumbotron textCenter>
+      <h1 class="title">Raffle!</h1>
+      <Storage
+        {raffle}
+        {raffleStorage}
+        {loadRaffle}
+        {saveRaffle}
+        {deleteRaffle} />
+      {#if winner}
+        <div id="winner">
+          {@html winner}
+        </div>
+      {/if}
+    </Jumbotron>
+    <Row>
+      <Column mobile={12} md={8}>
+        <Row center>
+          <Column mobile={12} md={10}>
             <Display
               {raffle}
               {animationNameIn}
               {count}
               {winnerDisabled}
               on:click={deleteEntrant} />
-          </div>
-        </Column>
-      </Row>
-    </Column>
-    <Column mobile={12} md={4}>
-      <Entry
-        {name}
-        {entries}
-        {winnerDisabled}
-        {pickWinner}
-        {onSubmit}
-        {raffle}
-        {resetRaffle}
-        {progressBar}
-        {progressText}
-        handleNameInput={e => handleInput(e, 'name')}
-        handleEntryInput={e => handleInput(e, 'entries')} />
-    </Column>
-  </Row>
-</Container>
+
+          </Column>
+        </Row>
+      </Column>
+      <Column mobile={12} md={4}>
+        <Entry
+          {name}
+          {entries}
+          {winnerDisabled}
+          {pickWinner}
+          {onSubmit}
+          {raffle}
+          {resetRaffle}
+          {progressBar}
+          {progressText}
+          handleNameInput={e => handleInput(e, 'name')}
+          handleEntryInput={e => handleInput(e, 'entries')} />
+      </Column>
+    </Row>
+  </Container>
+</div>
