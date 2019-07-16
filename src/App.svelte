@@ -1,7 +1,7 @@
 <script>
   import moment from "moment";
   import swal from "sweetalert";
-  import {colorClasses, phrases} from "./constants/constant";
+  import { colorClasses, phrases } from "./constants/constant";
   import Container from "./common/Container.svelte";
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
@@ -97,6 +97,8 @@
 
   const deleteEntrant = event => {
     winner = "";
+    progressBar = 0;
+    progressText = "";
     // grab value from delete button
     const { value } = event.target;
     // grab node list where the value === className and turn it into an array
@@ -126,8 +128,7 @@
     const interval = setInterval(() => {
       const randomClass =
         colorClasses[getRandomInt(0, colorClasses.length - 1)];
-      const randomPhrase =
-        phrases[getRandomInt(0, phrases.length - 1)];
+      const randomPhrase = phrases[getRandomInt(0, phrases.length - 1)];
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
       winner = `<div class="animated pulse random badge badge-${randomClass}">${randomPhrase} ${tickerRandom}</div>`;
