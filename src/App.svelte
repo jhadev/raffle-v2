@@ -94,6 +94,7 @@
   };
 
   const deleteEntrant = event => {
+    winner = "";
     // grab value from delete button
     const { value } = event.target;
     // grab node list where the value === className and turn it into an array
@@ -296,11 +297,14 @@
     <Column mobile={12} md={8}>
       <Row center>
         <Column mobile={12} md={10}>
-          <Display
-            {raffle}
-            {animationNameIn}
-            {count}
-            on:click={deleteEntrant} />
+          <div class="mb-4">
+            <Display
+              {raffle}
+              {animationNameIn}
+              {count}
+              {winnerDisabled}
+              on:click={deleteEntrant} />
+          </div>
         </Column>
       </Row>
     </Column>

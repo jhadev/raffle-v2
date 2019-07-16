@@ -11,6 +11,12 @@
 
 <style>
   /* no style yet */
+  label {
+    font-size: 0.8rem !important;
+    font-weight: bold;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+  }
 </style>
 
 <div class="form-group">
