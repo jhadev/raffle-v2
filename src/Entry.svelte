@@ -27,6 +27,24 @@
   .resetRaffle {
     font-size: 14px;
   }
+
+  .progress {
+    height: 1rem !important;
+  }
+
+  .progress-bar-striped {
+    background-size: 1rem 1rem !important;
+  }
+
+  label {
+    font-size: 18px !important;
+  }
+
+  @media screen and (max-width: 600px) {
+    .wrapper {
+      margin: 1rem 0rem;
+    }
+  }
 </style>
 
 <div class="wrapper">

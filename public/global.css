@@ -5,47 +5,31 @@ body {
 	min-height: 100vh;
 	background: #141e30;
 	/* fallback for old browsers */
-	background: -webkit-linear-gradient(#141e30,
-			#243b55);
+	/* background: -webkit-linear-gradient(#141e30,
+			#243b55); */
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(#141e30,
-			#243b55);
+	/* background: linear-gradient(#141e30,
+			#243b55); */
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 }
 
-.load-btn,
-.save-btn,
-.reset-btn {
-	color: white;
+.delete {
+	background-color: #f34040 !important;
 }
 
-.delete-entry {
-	cursor: pointer;
-	font-size: 14px;
-	color: white;
-	font-weight: bold;
+.load,
+.save {
+	background-color: #25b5f8 !important;
 }
 
-#clear-page {
-	cursor: pointer;
-	font-size: 12px;
+.swal-text {
+	text-align: center;
 }
 
 .jumbotron {
 	background: transparent !important;
-}
-
-
-.alert {
-	cursor: pointer;
-	font-size: 14px;
-}
-
-#chance,
-#count {
-	word-wrap: break-word;
 }
 
 .icon-large {
@@ -66,13 +50,38 @@ body {
 	font-family: "Roboto Slab", serif;
 }
 
-/* #total-entries {
-	font-size: 42px;
+.swal-overlay {
+	background-color: rgba(0, 0, 0, .7)
 }
 
-#winner {
-	font-size: 56px;
-} */
+/* for bootswatch */
+
+.btn {
+	border: 1px solid transparent !important;
+}
+
+.btn-outline-primary {
+	border-color: #2196F3 !important;
+}
+
+.btn-outline-danger {
+	border-color: #e51c23 !important;
+}
+
+.btn-outline-success {
+	border-color: #4CAF50 !important;
+}
+
+.btn-outline-light {
+	border-color: #eee !important;
+}
+
+label {
+	font-size: 0.8rem !important;
+	font-weight: bold;
+	text-align: left !important;
+	margin-bottom: 0 !important;
+}
 
 /* Customize website's scrollbar like Mac OS
 Not supports in Firefox and IE */

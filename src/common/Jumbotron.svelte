@@ -8,7 +8,7 @@
   /* i don't have much style yet */
   .jumbotron {
     margin-bottom: 0px !important;
-    padding: 3rem 2rem !important;
+    padding: 2rem 2rem !important;
   }
 </style>
 

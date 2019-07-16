@@ -142,13 +142,14 @@
       const savedDate = JSON.parse(localStorage.getItem("date"));
       swal({
         title: "Hold up...",
-        text: `You are about to overwrite your current save from ${savedDate}. Do you want to proceed`,
+        text: `You are about to overwrite your current save from ${savedDate}. Do you want to proceed?`,
         icon: "warning",
         buttons: {
           cancel: "Cancel",
-          load: {
+          confirm: {
             text: "Do It!",
-            value: true
+            value: true,
+            className: "save"
           }
         }
       }).then(value => {
@@ -198,9 +199,10 @@
         icon: "warning",
         buttons: {
           cancel: "Cancel",
-          load: {
+          confirm: {
             text: "Load",
-            value: true
+            value: true,
+            className: "load"
           }
         }
       }).then(value => {
@@ -216,13 +218,14 @@
     savedDate = JSON.parse(savedDate);
     swal({
       title: "Deleting Raffle...",
-      text: `Delete your raffle that was saved on ${savedDate} `,
+      text: `Delete your raffle that was saved on ${savedDate}?`,
       icon: "error",
       buttons: {
         cancel: "Cancel",
-        load: {
+        confirm: {
           text: "Delete",
-          value: true
+          value: true,
+          className: "delete"
         }
       }
     }).then(value => {
@@ -259,11 +262,11 @@
 
 <style>
   /* TODO: don't forget to style */
-  h1,
-  h2 {
+  h1 {
     text-align: center;
-    color: aliceblue;
-    margin-top: 10px;
+    color: #fff;
+    margin: 1.5rem 0px;
+    font-size: 48px;
   }
 
   #winner {
@@ -280,11 +283,8 @@
       {loadRaffle}
       {saveRaffle}
       {deleteRaffle} />
-    {#if raffle.length}
-      <h2>Total Entries: {raffle.length}</h2>
-    {/if}
     {#if winner}
-      <div id="winner" class="text-center">
+      <div id="winner" class="text-center my-2">
         {@html winner}
       </div>
     {/if}
@@ -293,7 +293,11 @@
     <Column mobile={12} md={8}>
       <Row center>
         <Column mobile={12} md={10}>
-          <Display {animationNameIn} {count} on:click={deleteEntrant} />
+          <Display
+            {raffle}
+            {animationNameIn}
+            {count}
+            on:click={deleteEntrant} />
         </Column>
       </Row>
     </Column>

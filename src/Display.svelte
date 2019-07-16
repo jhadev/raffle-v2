@@ -1,6 +1,7 @@
 <script>
   export let count;
   export let animationNameIn;
+  export let raffle;
 </script>
 
 <style>
@@ -23,11 +24,19 @@
     text-align: center;
     color: #f8f9fa;
   }
+
+  .deleteEntry {
+    padding: 0.5rem 0.75rem !important;
+  }
 </style>
 
 <!-- <div class="text-light text-center"> -->
 <!-- iterate over count declaration -->
 <!-- FIXME: change how this is displayed and maybe add a parent div? -->
+
+{#if raffle.length}
+  <h2 class="mb-4">Total Entries: {raffle.length}</h2>
+{/if}
 
 {#each count as { name, total, odds }, index}
   {#if index === 0}
@@ -37,7 +46,9 @@
     class="count-wrapper {name} animated {animationNameIn} d-flex
     justify-content-between border-light border-right border-left">
     <!-- delete button -->
-    <button value={name} on:click class="btn btn-outline-light">X</button>
+    <button value={name} on:click class="btn btn-outline-light deleteEntry">
+      X
+    </button>
     <!-- display content -->
     <div class="align-self-center badge badge-light odds">{name}: {total}</div>
     {#if odds > 50}
