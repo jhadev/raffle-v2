@@ -293,7 +293,7 @@
 
   @media screen and (max-width: 400px) {
     #winner {
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
   }
 </style>
