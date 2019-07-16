@@ -38,34 +38,39 @@
 {#if raffle.length}
   <h2 class="mb-4">Total Entries: {raffle.length}</h2>
 {/if}
-<!-- <div class="countWrapper"> -->
-{#each count as { name, total, odds }, index}
-  {#if index === 0}
-    <hr class="animated {animationNameIn} {name}" />
-  {/if}
-  <div
-    class="count-wrapper {name} animated {animationNameIn} d-flex
-    justify-content-between border-light border-right border-left">
-    <!-- delete button -->
-    <button
-      disabled={winnerDisabled}
-      value={name}
-      on:click
-      class="btn btn-outline-light deleteEntry">
-      X
-    </button>
-    <!-- display content -->
-    <div class="align-self-center badge badge-light odds">{name}: {total}</div>
-    {#if odds > 50}
-      <div class="align-self-center odds badge badge-success">{odds}%</div>
-    {:else if odds < 10}
-      <div class="align-self-center odds badge badge-danger">{odds}%</div>
-    {:else}
-      <div class="align-self-center odds badge badge-light">{odds}%</div>
+
+<div>
+  {#each count as { name, total, odds }, index}
+    {#if index === 0}
+      <hr class="animated {animationNameIn} {name}" />
     {/if}
-  </div>
-  <hr class="{name} animated {animationNameIn}" />
-{:else}
-  <h2>Add some entries!</h2>
-{/each}
-<!-- </div> -->
+    <!-- FIXME: add back inbound animation but fix so border doesn't go blank -->
+    <div
+      class="count-wrapper {name} animated d-flex justify-content-between
+      border-light border-right border-left">
+      <!-- delete button -->
+      <button
+        disabled={winnerDisabled}
+        value={name}
+        on:click
+        class="btn btn-outline-light deleteEntry">
+        X
+      </button>
+      <!-- display content -->
+      <div class="align-self-center badge badge-light odds">
+        {name}: {total}
+      </div>
+      {#if odds > 50}
+        <div class="align-self-center odds badge badge-success">{odds}%</div>
+      {:else if odds < 10}
+        <div class="align-self-center odds badge badge-danger">{odds}%</div>
+      {:else}
+        <div class="align-self-center odds badge badge-light">{odds}%</div>
+      {/if}
+    </div>
+    <hr class="{name} animated {animationNameIn}" />
+  {:else}
+    <h2>Add some entries!</h2>
+  {/each}
+  <!-- </div> -->
+</div>

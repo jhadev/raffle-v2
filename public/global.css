@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee&display=swap');
+
 body {
 	margin: 0;
 	display: flex;
@@ -13,6 +15,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+
 }
 
 .delete {
@@ -47,7 +50,7 @@ body {
 }
 
 .title {
-	font-family: "Roboto Slab", serif;
+	font-family: 'Bungee', cursive;
 }
 
 .swal-overlay {

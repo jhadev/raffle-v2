@@ -1,6 +1,7 @@
 <script>
   import moment from "moment";
   import swal from "sweetalert";
+  import {colorClasses, phrases} from "./constants/constant";
   import Container from "./common/Container.svelte";
   import Jumbotron from "./common/Jumbotron.svelte";
   import Column from "./common/Column.svelte";
@@ -21,6 +22,7 @@
   let progressText = "";
   let animationNameIn = "zoomIn";
   let animationNameOut = "zoomOut";
+
   // reactive declaration to count names in raffle array whenever it changes
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
@@ -115,24 +117,29 @@
   };
 
   const pickWinner = () => {
+    scrollTop();
     animateProgressBar();
     winnerDisabled = true;
     const raffleClone = [...raffle];
     const random = randomize(raffleClone);
     const winningName = random[getRandomInt(0, random.length - 1)];
     const interval = setInterval(() => {
+      const randomClass =
+        colorClasses[getRandomInt(0, colorClasses.length - 1)];
+      const randomPhrase =
+        phrases[getRandomInt(0, phrases.length - 1)];
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
-      winner = `<div class="badge badge-light">${tickerRandom}</div>`;
+      winner = `<div class="animated pulse random badge badge-${randomClass}">${randomPhrase} ${tickerRandom}</div>`;
       setTimeout(() => {
         clearInterval(interval);
       }, 5000);
-    }, 100);
+    }, 300);
     setTimeout(() => {
       // FIXME: change how this is displayed
-      winner = `<div class="badge badge-success">The winner is ${winningName}!</div>`;
+      winner = `<div class="animated flip win badge badge-success">The winner is ${winningName}!</div>`;
       winnerDisabled = false;
-    }, 5100);
+    }, 5300);
   };
 
   const saveRaffle = () => {
@@ -259,6 +266,12 @@
       }
     }, 1000);
   };
+
+  const scrollTop = () => {
+    if (screen.width <= 768) {
+      window.scrollTo(0, 0);
+    }
+  };
 </script>
 
 <style>
@@ -271,16 +284,22 @@
   }
 
   #winner {
-    font-size: 48px;
+    font-size: 3rem;
     text-align: center;
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
+  }
+
+  @media screen and (max-width: 400px) {
+    #winner {
+      font-size: 2.5rem;
+    }
   }
 </style>
 
 <Container>
   <Jumbotron textCenter>
-    <h1>Raffle!</h1>
+    <h1 class="title">Raffle!</h1>
     <Storage
       {raffle}
       {raffleStorage}
