@@ -108,6 +108,11 @@ body::-webkit-scrollbar-button {
 }
 
 @media screen and (max-width: 600px) {
+
+	body {
+		min-height: 0vh;
+	}
+
 	.alert {
 		font-size: 12px;
 		cursor: pointer;

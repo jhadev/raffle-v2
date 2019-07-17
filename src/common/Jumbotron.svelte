@@ -10,6 +10,12 @@
     margin-bottom: 0px !important;
     padding: 2rem 2rem !important;
   }
+
+  @media screen and (max-width: 600px) {
+    .jumbotron {
+      padding: 1rem 1rem !important;
+    }
+  }
 </style>
 
 <div
