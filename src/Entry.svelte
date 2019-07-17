@@ -37,6 +37,10 @@
     background-size: 1rem 1rem !important;
   }
 
+  .btn-outline-danger {
+    box-shadow: none !important;
+  }
+
   @media screen and (max-width: 600px) {
     .wrapper {
       margin: 1rem 0rem;
@@ -86,18 +90,16 @@
         class="btn btn-primary ml-3 mb-2">
         Submit
       </button>
-    </Row>
-    <Row>
       <button
         disabled={!raffle.length || winnerDisabled}
         on:click={pickWinner}
-        class="ml-3 btn btn-success">
+        class="ml-2 mb-2 btn btn-success">
         Pick Winner
       </button>
       {#if raffle.length}
         <button
           on:click={resetRaffle}
-          class="mr-3 ml-auto btn btn-outline-danger">
+          class="mr-3 mb-2 ml-auto btn btn-outline-danger">
           <i class="fas fa-undo-alt resetRaffle" />
         </button>
       {/if}

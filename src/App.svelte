@@ -27,6 +27,7 @@
   // possibly can add to this to do more.
   $: count = countEntrants(raffle);
 
+  // START REACTIVE FUNCTIONS
   const countEntrants = raffle => {
     let raffleCount = raffle.reduce((obj, name) => {
       obj[name] = (obj[name] || 0) + 1;
@@ -47,6 +48,28 @@
 
     return raffleCount;
   };
+  // END REACTIVE FUNCTIONS
+  
+  // START UTILITY FUNCTIONS
+  const animateProgressBar = () => {
+    let currentProgress = 0;
+    progressBar = 0;
+    progressText = "Randomizing Entries";
+    const interval = setInterval(function() {
+      currentProgress += getRandomInt(50, 75);
+      progressBar = currentProgress;
+      if (currentProgress >= 100) {
+        clearInterval(interval);
+        progressText = "Entries Randomized";
+      }
+    }, 1000);
+  };
+
+  const scrollTop = () => {
+    if (screen.width <= 768) {
+      window.scrollTo(0, 0);
+    }
+  };
 
   const randomize = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -56,6 +79,13 @@
     return array;
   };
 
+  const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  // END UTILITY FUNCTIONS
+
+  // START RAFFLE FUNCTIONS
   const handleInput = (event, inputName) => {
     const { value } = event.target;
     switch (inputName) {
@@ -95,6 +125,13 @@
     entries = "";
   };
 
+  const resetRaffle = () => {
+    progressBar = 0;
+    progressText = "";
+    winner = "";
+    raffle = [];
+  };
+
   const deleteEntrant = event => {
     winner = "";
     progressBar = 0;
@@ -112,10 +149,6 @@
     setTimeout(() => {
       raffle = raffle.filter(entrant => entrant !== value);
     }, 700);
-  };
-
-  const getRandomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   const pickWinner = () => {
@@ -142,7 +175,9 @@
       winnerDisabled = false;
     }, 5300);
   };
+  // END RAFFLE FUNCTIONS
 
+  // START STORAGE FUNCTIONS
   const saveRaffle = () => {
     // FIXME: clean this up somehow??
     const raffleClone = [...raffle];
@@ -191,20 +226,19 @@
   };
 
   const loadRaffle = () => {
-    // TODO: option to merge or replace
     const raffleClone = [...raffle];
     const savedRaffle = localStorage.getItem("raffle");
     let savedDate = localStorage.getItem("date");
     savedDate = JSON.parse(savedDate);
+    const namesList = JSON.parse(savedRaffle);
 
-    if (savedRaffle) {
-      const namesList = JSON.parse(savedRaffle);
+    if (savedRaffle && raffle.length) {
       namesList.forEach(name => {
         raffleClone.push(name);
       });
       swal({
         title: "Loading Raffle...",
-        text: `Loading your saved raffle will merge it with the current raffle.`,
+        text: `Loading your saved raffle from ${savedDate} will merge it with the current raffle.`,
         icon: "warning",
         buttons: {
           cancel: "Cancel",
@@ -217,6 +251,17 @@
       }).then(value => {
         if (value) {
           raffle = raffleClone;
+        }
+      });
+    } else if (savedRaffle) {
+      raffle = namesList;
+      swal({
+        title: "Success!",
+        text: `Your raffle from ${savedDate} has been loaded`,
+        icon: "success",
+        button: {
+          text: "Close",
+          className: "load"
         }
       });
     }
@@ -246,33 +291,7 @@
       }
     });
   };
-
-  const resetRaffle = () => {
-    progressBar = 0;
-    progressText = "";
-    winner = "";
-    raffle = [];
-  };
-
-  const animateProgressBar = () => {
-    let currentProgress = 0;
-    progressBar = 0;
-    progressText = "Randomizing Entries";
-    const interval = setInterval(function() {
-      currentProgress += getRandomInt(50, 75);
-      progressBar = currentProgress;
-      if (currentProgress >= 100) {
-        clearInterval(interval);
-        progressText = "Entries Randomized";
-      }
-    }, 1000);
-  };
-
-  const scrollTop = () => {
-    if (screen.width <= 768) {
-      window.scrollTo(0, 0);
-    }
-  };
+  // END STORAGE FUNCTIONS
 </script>
 
 <style>
