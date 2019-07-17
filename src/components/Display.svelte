@@ -28,6 +28,21 @@
 
   .deleteEntry {
     padding: 0.5rem 0.75rem !important;
+    cursor: pointer;
+  }
+
+  .deleteEntry:focus,
+  .deleteEntry:active:focus,
+  .deleteEntry.active:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .deleteEntry:hover {
+      background-color: transparent;
+      color: #f8f9fa;
+    }
   }
 </style>
 
@@ -38,8 +53,7 @@
 {#if raffle.length}
   <h2 class="mb-4">Total Entries: {raffle.length}</h2>
 {/if}
-
-<div>
+<div id="counts">
   {#each count as { name, total, odds }, index}
     {#if index === 0}
       <hr class="animated {animationNameIn} {name}" />

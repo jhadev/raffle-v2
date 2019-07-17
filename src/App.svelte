@@ -138,7 +138,7 @@
     progressText = "";
     // grab value from delete button
     const { value, id } = event.target;
-    document.getElementById(id).blur();
+
     // grab node list where the value === className and turn it into an array
     let namesDOM = [...document.getElementsByClassName(value)];
     // loop and remove the inbound animation and add the outbound
@@ -146,7 +146,7 @@
       name.classList.remove(animationNameIn);
       name.classList.add(animationNameOut);
     });
-    // wait half a second to trigger a render and remove entrant from raffle array.
+    // wait 700ms to trigger a render and remove entrant from raffle array.
     setTimeout(() => {
       raffle = raffle.filter(entrant => entrant !== value);
     }, 700);
