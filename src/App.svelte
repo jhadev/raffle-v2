@@ -2,13 +2,13 @@
   import moment from "moment";
   import swal from "sweetalert";
   import { colorClasses, phrases } from "./constants/constant";
-  import Container from "./common/Container.svelte";
-  import Jumbotron from "./common/Jumbotron.svelte";
-  import Column from "./common/Column.svelte";
-  import Row from "./common/Row.svelte";
-  import Entry from "./Entry.svelte";
-  import Display from "./Display.svelte";
-  import Storage from "./Storage.svelte";
+  import Container from "./components/common/Container.svelte";
+  import Jumbotron from "./components/common/Jumbotron.svelte";
+  import Column from "./components/common/Column.svelte";
+  import Row from "./components/common/Row.svelte";
+  import Entry from "./components/Entry.svelte";
+  import Display from "./components/Display.svelte";
+  import Storage from "./components/Storage.svelte";
 
   // TODO: get rid of console.logs and alerts
 
@@ -49,7 +49,7 @@
     return raffleCount;
   };
   // END REACTIVE FUNCTIONS
-  
+
   // START UTILITY FUNCTIONS
   const animateProgressBar = () => {
     let currentProgress = 0;
@@ -137,7 +137,8 @@
     progressBar = 0;
     progressText = "";
     // grab value from delete button
-    const { value } = event.target;
+    const { value, id } = event.target;
+    document.getElementById(id).blur();
     // grab node list where the value === className and turn it into an array
     let namesDOM = [...document.getElementsByClassName(value)];
     // loop and remove the inbound animation and add the outbound
@@ -164,7 +165,7 @@
       const randomPhrase = phrases[getRandomInt(0, phrases.length - 1)];
       const tickerRandom = random[getRandomInt(0, random.length - 1)];
       // FIXME: change how this is displayed
-      winner = `<div class="animated pulse random badge badge-${randomClass}">${randomPhrase} ${tickerRandom}</div>`;
+      winner = `<span class='text-light mr-3 phrase'>${randomPhrase}</span><div class="animated pulse random badge badge-${randomClass}">${tickerRandom}</div>`;
       setTimeout(() => {
         clearInterval(interval);
       }, 5000);

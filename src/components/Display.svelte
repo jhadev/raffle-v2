@@ -52,6 +52,7 @@
       <button
         disabled={winnerDisabled}
         value={name}
+        id={name}
         on:click
         class="btn btn-outline-light deleteEntry">
         X
