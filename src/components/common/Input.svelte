@@ -12,10 +12,10 @@
 <style>
   /* no style yet */
   label {
-    font-size: 0.9rem !important;
-    font-weight: bold;
+    font-size: 1rem !important;
+    /* font-weight: bold; */
     text-align: left !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 5px !important;
   }
 
   .form-control {

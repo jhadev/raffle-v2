@@ -20,7 +20,7 @@
 
 <style>
   .wrapper {
-    text-align: center;
+    /* text-align: center; */
     color: black;
   }
 

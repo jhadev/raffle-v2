@@ -9,6 +9,7 @@
   .header {
     font-weight: bold;
     font-size: 0.95rem;
+    text-align: center;
   }
 </style>
 
