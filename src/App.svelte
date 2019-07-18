@@ -1,8 +1,8 @@
 <script>
   import moment from "moment";
   import swal from "sweetalert";
-  import { saveAlert, loadAlert, deleteAlert } from "./utlis/swalHelper";
-  import { scrollTop, randomize, getRandomInt } from "./utlis/utilFns";
+  import { saveAlert, loadAlert, deleteAlert } from "./utils/swalHelper";
+  import { scrollTop, randomize, getRandomInt } from "./utils/utilFns";
   import { colorClasses, phrases } from "./constants/constant";
   import Container from "./components/common/Container.svelte";
   import Jumbotron from "./components/common/Jumbotron.svelte";
@@ -122,7 +122,6 @@
     progressText = "";
     // grab value from delete button
     const { value, id } = event.target;
-
     // grab node list where the value === className and turn it into an array
     let namesDOM = [...document.getElementsByClassName(value)];
     // loop and remove the inbound animation and add the outbound
