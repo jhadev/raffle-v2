@@ -308,8 +308,7 @@
               {animationNameIn}
               {count}
               {winnerDisabled}
-              on:click={deleteEntrant} />
-
+              {deleteEntrant} />
           </Column>
         </Row>
       </Column>

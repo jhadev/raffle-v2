@@ -3,6 +3,7 @@
   export let animationNameIn;
   export let raffle;
   export let winnerDisabled;
+  export let deleteEntrant = () => {};
 </script>
 
 <style>
@@ -67,7 +68,7 @@
         disabled={winnerDisabled}
         value={name}
         id={name}
-        on:click
+        on:click={deleteEntrant}
         class="btn btn-outline-light deleteEntry">
         X
       </button>
