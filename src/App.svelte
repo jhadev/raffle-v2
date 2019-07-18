@@ -2,6 +2,7 @@
   import moment from "moment";
   import swal from "sweetalert";
   import { saveAlert, loadAlert, deleteAlert } from "./utlis/swalHelper";
+  import { scrollTop, randomize, getRandomInt } from "./utlis/utilFns";
   import { colorClasses, phrases } from "./constants/constant";
   import Container from "./components/common/Container.svelte";
   import Jumbotron from "./components/common/Jumbotron.svelte";
@@ -64,24 +65,6 @@
         progressText = "Entries Randomized";
       }
     }, 1000);
-  };
-
-  const scrollTop = () => {
-    if (screen.width <= 768) {
-      window.scrollTo(0, 0);
-    }
-  };
-
-  const randomize = array => {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
-  const getRandomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   // END UTILITY FUNCTIONS
@@ -218,8 +201,7 @@
   const loadRaffle = () => {
     const raffleClone = [...raffle];
     const savedRaffle = localStorage.getItem("raffle");
-    let savedDate = localStorage.getItem("date");
-    savedDate = JSON.parse(savedDate);
+    const savedDate = JSON.parse(localStorage.getItem("date"));
     const namesList = JSON.parse(savedRaffle);
 
     if (savedRaffle && raffle.length) {
@@ -246,8 +228,7 @@
   };
 
   const deleteRaffle = () => {
-    let savedDate = localStorage.getItem("date");
-    savedDate = JSON.parse(savedDate);
+    const savedDate = JSON.parse(localStorage.getItem("date"));
     deleteAlert(savedDate).then(value => {
       if (value) {
         // trigger a render to remove load button
